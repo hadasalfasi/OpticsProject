@@ -27,11 +27,10 @@ namespace OpticsProject.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginDto login)
         {
-            // כאן את יכולה להוסיף את הלוגיקה שלך לבדוק אם המשתמש מאומת
-            if (login.Username == "test" && login.Password == "password") // דוגמה לבדיקת משתמש
+           if (login.Username == "test" && login.Password == "password") 
             {
-                var token = GenerateToken("userId", "Admin"); // החליפי ב-userId נכון
-                return Ok(new { Token = token });
+              var token = GenerateToken(login.Username, "Admin"); 
+              return Ok(new { Token = token });
             }
 
             return Unauthorized("Invalid credentials");
@@ -59,7 +58,7 @@ namespace OpticsProject.Controllers
                 issuer: _issuer,
                 audience: _audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(30), // וודאי שהתאריך לא פג תוקף
+                expires: DateTime.UtcNow.AddMinutes(30), 
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
